@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "152778078228",
+    "firebase_url": "https://bargy-ed9f0.firebaseio.com",
+    "project_id": "bargy-ed9f0",
+    "storage_bucket": "bargy-ed9f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152778078228:android:a99df6d84890c564",
+        "android_client_info": {
+          "package_name": "com.lunareclipse.bargy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152778078228-ffk7784cib3j8jp0n4p4bg4c06gciv79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lunareclipse.bargy",
+            "certificate_hash": "0815f38f3c37765df9abb0c2ed21b01ed9b72230"
+          }
+        },
+        {
+          "client_id": "152778078228-6n3us9trhotr2a83eb49b5enorg8u0t3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuLfRKZXW_QuH3USODP39VLyriF2YNM0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152778078228-6n3us9trhotr2a83eb49b5enorg8u0t3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
