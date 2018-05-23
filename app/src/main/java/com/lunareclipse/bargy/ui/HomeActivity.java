@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
                 ArrayList<Language> languages = response.body();
 
-                Log.d("HomeActivity", "Response: " + response.body());
+                Log.d("HomeActivity", "Language: " + languages.get(0).toString());
 
             }
 

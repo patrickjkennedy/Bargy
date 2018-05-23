@@ -29,5 +29,9 @@ dependencies {
     // Firebase dependencies
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-database:15.0.1'
+
+    // Retrofit dependencies
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

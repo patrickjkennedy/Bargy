@@ -23,7 +23,7 @@ public class Language implements Serializable{
     }
 
     public String getStatus(){
-        return type;
+        return status;
     }
 
     @Override

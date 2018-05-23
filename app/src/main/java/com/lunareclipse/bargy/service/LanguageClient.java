@@ -9,6 +9,6 @@ import retrofit2.http.GET;
 
 public interface LanguageClient {
 
-    @GET("bargy.json")
+    @GET("languages.json")
     Call<ArrayList<Language>> getLanguages();
 }
