@@ -26,6 +26,18 @@ public class Language implements Serializable{
         return status;
     }
 
+    public String getFullOrigin(){
+        return "Origin: " + origin;
+    }
+
+    public String getFullType(){
+        return "Type: " + type;
+    }
+
+    public String getFullStatus(){
+        return "Status: " + status;
+    }
+
     @Override
     public String toString() {
         return "Name: " + getName() + "\n" + "Image: " + getImage() + "\n" +
