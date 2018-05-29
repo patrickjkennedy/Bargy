@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,8 +35,10 @@ public class LanguageMenuFragment extends Fragment {
     // Context
     private Context mContext;
 
-    // ProgressBar for Loading
-    @BindView(R.id.pb_loading_indicator) ProgressBar mLoadingIndicator;
+    // Cardviews for Language Menu
+    @BindView(R.id.cv_glossary) CardView mGlossaryOption;
+    @BindView(R.id.cv_history) CardView mHistoryOption;
+    @BindView(R.id.cv_culture) CardView mCultureOption;
 
     public LanguageMenuFragment() {
         // Required empty public constructor
@@ -49,6 +52,34 @@ public class LanguageMenuFragment extends Fragment {
         mContext = getActivity();
 
         final View rootView = inflater.inflate(R.layout.fragment_language_menu, container, false);
+
+        // Bind Butterknife variables
+        ButterKnife.bind(this, rootView);
+
+        mGlossaryOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create the glossary fragment
+                Log.d("LanguageMenuFragment", "Glossary - ta da!");
+            }
+        });
+
+        mHistoryOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create the history fragment
+                Log.d("LanguageMenuFragment", "History - ta da!");
+
+            }
+        });
+
+        mCultureOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create the culture fragment
+                Log.d("LanguageMenuFragment", "Culture - ta da!");
+            }
+        });
 
         return rootView;
     }

@@ -33,7 +33,7 @@
                 android:id="@+id/iv_glossary"
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
-                tools:src="@drawable/yola"
+                android:src="@drawable/yola"
                 tools:contentDescription="Language Image"/>
 
             <TextView
@@ -76,7 +76,7 @@
                 android:id="@+id/iv_history"
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
-                tools:src="@drawable/yola"
+                android:src="@drawable/yola"
                 tools:contentDescription="Language Image"/>
 
             <TextView
@@ -119,7 +119,7 @@
                 android:id="@+id/iv_culture"
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
-                tools:src="@drawable/yola"
+                android:src="@drawable/yola"
                 tools:contentDescription="Language Image"/>
 
             <TextView
