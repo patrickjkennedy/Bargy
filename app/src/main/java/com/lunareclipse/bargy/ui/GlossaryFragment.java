@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.lunareclipse.bargy.R;
+import com.lunareclipse.bargy.data.GlossaryAdapter;
 import com.lunareclipse.bargy.data.LanguagesAdapter;
 import com.lunareclipse.bargy.model.Language;
 import com.lunareclipse.bargy.service.LanguageClient;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeFragment extends Fragment {
+public class GlossaryFragment extends Fragment {
 
     // Context
     private Context mContext;
@@ -37,8 +38,8 @@ public class HomeFragment extends Fragment {
     // RecyclerView
     @BindView(R.id.rv_master_list) RecyclerView mRecyclerView;
 
-    // LanguagesAdapter
-    private LanguagesAdapter mAdapter;
+    // GlossaryAdapter
+    private GlossaryAdapter mAdapter;
 
     // TextView for Error Messaging
     @BindView(R.id.tv_error_message_display) TextView mErrorTextView;
@@ -49,18 +50,18 @@ public class HomeFragment extends Fragment {
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "LanguagesFragment.recycler.layout";
 
-    public HomeFragment() {
+    public GlossaryFragment() {
         // Required empty public constructor
     }
 
-    // Inflates the RecyclerView containing the CardView for each Language
+    // Inflates the RecyclerView
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         // Context
         mContext = getActivity();
 
-        final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_glossary, container, false);
 
         // Bind Butterknife variables
         ButterKnife.bind(this, rootView);

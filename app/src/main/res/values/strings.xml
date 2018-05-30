@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Bargy</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_list_error">Unable to Load Languages</string>
+    <string name="glossary_error">Unable to Load Glossary</string>
 </resources>
