@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Language;
+import com.lunareclipse.bargy.model.Phrase;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
