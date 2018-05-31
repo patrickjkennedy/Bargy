@@ -15,9 +15,9 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        // Get the language name and update the Activity title on-screen
+/*        // Get the language name and update the Activity title on-screen
         Intent intent = getIntent();
         Language language = (Language) intent.getSerializableExtra("language");
-        this.setTitle(language.getName());
+        this.setTitle(language.getName());*/
     }
 }

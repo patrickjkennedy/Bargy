@@ -18,7 +18,9 @@ import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.GlossaryAdapter;
 import com.lunareclipse.bargy.data.LanguagesAdapter;
 import com.lunareclipse.bargy.model.Language;
+import com.lunareclipse.bargy.model.Phrase;
 import com.lunareclipse.bargy.service.LanguageClient;
+import com.lunareclipse.bargy.service.PhraseClient;
 
 import java.util.ArrayList;
 
@@ -36,19 +38,19 @@ public class GlossaryFragment extends Fragment {
     private Context mContext;
 
     // RecyclerView
-    @BindView(R.id.rv_master_list) RecyclerView mRecyclerView;
+    @BindView(R.id.rv_glossary) RecyclerView mRecyclerView;
 
     // GlossaryAdapter
     private GlossaryAdapter mAdapter;
 
     // TextView for Error Messaging
-    @BindView(R.id.tv_error_message_display) TextView mErrorTextView;
+    @BindView(R.id.tv_error_message_display_glossary) TextView mErrorTextView;
 
     // ProgressBar for Loading
-    @BindView(R.id.pb_loading_indicator) ProgressBar mLoadingIndicator;
+    @BindView(R.id.pb_loading_indicator_glossary) ProgressBar mLoadingIndicator;
 
     // Key for Recycler Layout
-    private static final String BUNDLE_RECYCLER_LAYOUT = "LanguagesFragment.recycler.layout";
+    private static final String BUNDLE_RECYCLER_LAYOUT = "GlossaryFragment.recycler.layout";
 
     public GlossaryFragment() {
         // Required empty public constructor
@@ -76,49 +78,37 @@ public class GlossaryFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // Setup click listener
-        LanguagesAdapter.HomeAdapterClickListener listener = new LanguagesAdapter.HomeAdapterClickListener() {
-            @Override
-            public void onClick(View view, Language language) {
-                Class destinationClass = MenuActivity.class;
-                Intent intent = new Intent(mContext, destinationClass);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("language", language);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        };
-
-        // Initialize the RecyclerView adapter, LanguagesAdapter
-        mAdapter = new LanguagesAdapter(listener, mContext);
+        // Initialize the RecyclerView adapter, GlossaryAdapter
+        mAdapter = new GlossaryAdapter(mContext);
 
         // Set the adapter
         mRecyclerView.setAdapter(mAdapter);
 
+        // Determine what language we are working with for our glossary
+        Intent intent = getActivity().getIntent();
+        Language language = (Language) intent.getSerializableExtra("language");
+        String languageName = language.getName().toLowerCase();
+
         // Construct the Retrofit builder
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://bargy-ed9f0.firebaseapp.com/")
+                .baseUrl("https://bargy-ed9f0.firebaseapp.com/" + languageName + "/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         // Create the retrofit objects
         Retrofit retrofit = builder.build();
 
         // Make the request and return the call object
-        LanguageClient client = retrofit.create(LanguageClient.class);
-        Call<ArrayList<Language>> call = client.getLanguages();
+        PhraseClient client = retrofit.create(PhraseClient.class);
+        Call<ArrayList<Phrase>> call = client.getPhrases();
 
         // As we're in UI thread, we need to make the network call asynchronously, we do this using enqueue
-        call.enqueue(new Callback<ArrayList<Language>>() {
+        call.enqueue(new Callback<ArrayList<Phrase>>() {
             @Override
-            public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
-                ArrayList<Language> languages = response.body();
+            public void onResponse(Call<ArrayList<Phrase>> call, Response<ArrayList<Phrase>> response) {
+                ArrayList<Phrase> phrases = response.body();
 
-                Log.d("HomeActivity", "Language: " + languages.get(0).toString());
-
-                // Pass the recipes from the response into the adapter
-                mAdapter.setLanguages(languages);
+                // Pass the phrases from the response into the adapter
+                mAdapter.setPhrases(phrases);
 
                 // Hide the loading icon
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
@@ -129,7 +119,7 @@ public class GlossaryFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Language>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Phrase>> call, Throwable t) {
                 // Hide the loading icon
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
                 // Display the error message

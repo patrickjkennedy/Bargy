@@ -21,7 +21,9 @@
         <activity
             android:name=".ui.MenuActivity"
             android:parentActivityName=".ui.HomeActivity" />
-        <activity android:name=".ui.GlossaryActivity"></activity>
+        <activity
+            android:name=".ui.GlossaryActivity"
+            android:parentActivityName=".ui.MenuActivity"/>
     </application>
 
 </manifest>
