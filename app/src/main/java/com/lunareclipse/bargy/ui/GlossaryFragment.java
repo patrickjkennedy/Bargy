@@ -1,9 +1,9 @@
 package com.lunareclipse.bargy.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,23 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.GlossaryAdapter;
-import com.lunareclipse.bargy.data.LanguagesAdapter;
-import com.lunareclipse.bargy.model.Language;
 import com.lunareclipse.bargy.model.Phrase;
-import com.lunareclipse.bargy.service.LanguageClient;
-import com.lunareclipse.bargy.service.PhraseClient;
-
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GlossaryFragment extends Fragment {
 
@@ -52,6 +45,11 @@ public class GlossaryFragment extends Fragment {
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "GlossaryFragment.recycler.layout";
 
+    // Firebase instance variables
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mGlossaryDatabaseReference;
+    private ChildEventListener mChildEventListener;
+
     public GlossaryFragment() {
         // Required empty public constructor
     }
@@ -64,6 +62,11 @@ public class GlossaryFragment extends Fragment {
         mContext = getActivity();
 
         final View rootView = inflater.inflate(R.layout.fragment_glossary, container, false);
+
+        // Initialize Firebase components
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mGlossaryDatabaseReference = mFirebaseDatabase.getReference().child("yola");
 
         // Bind Butterknife variables
         ButterKnife.bind(this, rootView);
@@ -84,48 +87,38 @@ public class GlossaryFragment extends Fragment {
         // Set the adapter
         mRecyclerView.setAdapter(mAdapter);
 
-        // Determine what language we are working with for our glossary
-        Intent intent = getActivity().getIntent();
-        Language language = (Language) intent.getSerializableExtra("language");
-        String languageName = language.getName().toLowerCase();
-
-        // Construct the Retrofit builder
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://bargy-ed9f0.firebaseapp.com/" + languageName + "/")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        // Create the retrofit objects
-        Retrofit retrofit = builder.build();
-
-        // Make the request and return the call object
-        PhraseClient client = retrofit.create(PhraseClient.class);
-        Call<ArrayList<Phrase>> call = client.getPhrases();
-
-        // As we're in UI thread, we need to make the network call asynchronously, we do this using enqueue
-        call.enqueue(new Callback<ArrayList<Phrase>>() {
+        // Setup the Firebase database event listener
+        mChildEventListener = new ChildEventListener() {
             @Override
-            public void onResponse(Call<ArrayList<Phrase>> call, Response<ArrayList<Phrase>> response) {
-                ArrayList<Phrase> phrases = response.body();
-
-                // Pass the phrases from the response into the adapter
-                mAdapter.setPhrases(phrases);
-
-                // Hide the loading icon
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("GlossaryFragment", "DS: " + dataSnapshot);
+                Phrase phrase = dataSnapshot.getValue(Phrase.class);
+                Log.d("GlossaryFragment", "Response: " + phrase.toString());
+                mAdapter.add(phrase);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+            }
 
-                // Reload the adapter
-                onViewStateRestored(savedInstanceState);
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Phrase>> call, Throwable t) {
-                // Hide the loading icon
-                mLoadingIndicator.setVisibility(View.INVISIBLE);
-                // Display the error message
-                mErrorTextView.setVisibility(View.VISIBLE);
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
             }
-        });
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
 
         return rootView;
     }
