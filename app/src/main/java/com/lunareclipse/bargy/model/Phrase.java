@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 public class Phrase implements Serializable{
 
-    private String phrase, translated_phrase;
+    private String phrase;
+    private String translated_phrase;
 
     public String getPhrase(){
         return phrase;
     }
 
-    public String getTranslatedPhrase(){
+    public String getTranslated_Phrase(){
         return translated_phrase;
     }
 
     @Override
     public String toString() {
-        return "Phrase: " + getPhrase() + "\n" + "Translated Phrase: " + getTranslatedPhrase();
+        return "Phrase: " + getPhrase() + "\n" + "Translated Phrase: " + getTranslated_Phrase();
     }
 }

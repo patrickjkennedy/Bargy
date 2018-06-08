@@ -51,7 +51,7 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Bind the data from the Phrase object to the view
         holder.languagePhrase.setText(mGlossary.get(position).getPhrase());
-        holder.translatedPhrase.setText(mGlossary.get(position).getTranslatedPhrase());
+        holder.translatedPhrase.setText(mGlossary.get(position).getTranslated_Phrase());
     }
 
     @Override
@@ -62,6 +62,11 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.ViewHo
 
     public void setPhrases(ArrayList<Phrase> glossary){
         mGlossary = glossary;
+        notifyDataSetChanged();
+    }
+
+    public void add(Phrase phrase){
+        mGlossary.add(phrase);
         notifyDataSetChanged();
     }
 }
