@@ -137,6 +137,10 @@ public class GlossaryFragment extends Fragment {
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                // Remove data from the recyclerview
+                mAdapter.clear();
+
                 // Phrases are capitalized in the database
                 String capitalizedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
                 // Do search
@@ -147,9 +151,12 @@ public class GlossaryFragment extends Fragment {
                         .addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                                 Phrase phrase = dataSnapshot.getValue(Phrase.class);
-                                Log.d("GlossaryFragment", "Response: " + phrase.toString());
+
+                                // Add phrases to the recyclerview
                                 mAdapter.add(phrase);
+                                mAdapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -172,7 +179,6 @@ public class GlossaryFragment extends Fragment {
 
                             }
                         });
-
                 return true;
             }
 
