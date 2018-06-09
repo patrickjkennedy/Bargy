@@ -10,6 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -22,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.GlossaryAdapter;
 import com.lunareclipse.bargy.model.Phrase;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,6 +47,9 @@ public class GlossaryFragment extends Fragment {
     // ProgressBar for Loading
     @BindView(R.id.pb_loading_indicator_glossary) ProgressBar mLoadingIndicator;
 
+    // MaterialSearchView
+    @BindView(R.id.search_view) MaterialSearchView mSearchView;
+
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "GlossaryFragment.recycler.layout";
 
@@ -52,6 +60,13 @@ public class GlossaryFragment extends Fragment {
 
     public GlossaryFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     // Inflates the RecyclerView
@@ -138,5 +153,13 @@ public class GlossaryFragment extends Fragment {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
             mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_glossary, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem item = menu.findItem(R.id.action_search);
+        mSearchView.setMenuItem(item);
     }
 }
