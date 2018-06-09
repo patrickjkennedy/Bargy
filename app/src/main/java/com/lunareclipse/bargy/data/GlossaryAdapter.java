@@ -3,6 +3,7 @@ package com.lunareclipse.bargy.data;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,15 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.ViewHo
         return mGlossary.size();
     }
 
-    public void setPhrases(ArrayList<Phrase> glossary){
-        mGlossary = glossary;
-        notifyDataSetChanged();
+    public void clear() {
+        final int size = mGlossary.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                mGlossary.remove(0);
+            }
+
+            notifyItemRangeRemoved(0, size);
+        }
     }
 
     public void add(Phrase phrase){

@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.GlossaryAdapter;
 import com.lunareclipse.bargy.model.Phrase;
@@ -106,9 +107,7 @@ public class GlossaryFragment extends Fragment {
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("GlossaryFragment", "DS: " + dataSnapshot);
                 Phrase phrase = dataSnapshot.getValue(Phrase.class);
-                Log.d("GlossaryFragment", "Response: " + phrase.toString());
                 mAdapter.add(phrase);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
             }
@@ -134,6 +133,60 @@ public class GlossaryFragment extends Fragment {
             }
         };
         mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
+
+        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                // Remove data from the recyclerview
+                mAdapter.clear();
+
+                // Phrases are capitalized in the database
+                String capitalizedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
+                // Do search
+                mGlossaryDatabaseReference
+                        .orderByChild("phrase")
+                        .startAt(query)
+                        .endAt(query + "\uf8ff")
+                        .addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                Phrase phrase = dataSnapshot.getValue(Phrase.class);
+
+                                // Add phrases to the recyclerview
+                                mAdapter.add(phrase);
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return rootView;
     }
@@ -162,4 +215,5 @@ public class GlossaryFragment extends Fragment {
         MenuItem item = menu.findItem(R.id.action_search);
         mSearchView.setMenuItem(item);
     }
+
 }
