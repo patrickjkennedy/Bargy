@@ -2,4 +2,5 @@
     <string name="app_name">Bargy</string>
     <string name="home_list_error">Unable to Load Languages</string>
     <string name="glossary_error">Unable to Load Glossary</string>
+    <string name="searchEngYola">Search English to Yola</string>
 </resources>
