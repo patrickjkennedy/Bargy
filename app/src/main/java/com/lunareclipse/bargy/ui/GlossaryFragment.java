@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.firebase.database.ChildEventListener;
@@ -48,8 +50,11 @@ public class GlossaryFragment extends Fragment {
     // ProgressBar for Loading
     @BindView(R.id.pb_loading_indicator_glossary) ProgressBar mLoadingIndicator;
 
-    // MaterialSearchView
-    @BindView(R.id.search_view) MaterialSearchView mSearchView;
+    // Search Button
+    @BindView(R.id.ib_search) ImageButton mSearchImageButton;
+
+    // Search EditText
+    @BindView(R.id.et_search) EditText mSearchEditText;
 
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "GlossaryFragment.recycler.layout";
@@ -61,13 +66,6 @@ public class GlossaryFragment extends Fragment {
 
     public GlossaryFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     // Inflates the RecyclerView
@@ -134,20 +132,22 @@ public class GlossaryFragment extends Fragment {
         };
         mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
 
-        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+        mSearchImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-
+            public void onClick(View view) {
                 // Remove data from the recyclerview
                 mAdapter.clear();
+
+                // Get query string
+                String query = mSearchEditText.getText().toString();
 
                 // Phrases are capitalized in the database
                 String capitalizedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
                 // Do search
                 mGlossaryDatabaseReference
                         .orderByChild("phrase")
-                        .startAt(query)
-                        .endAt(query + "\uf8ff")
+                        .startAt(capitalizedQuery)
+                        .endAt(capitalizedQuery + "\uf8ff")
                         .addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -179,14 +179,9 @@ public class GlossaryFragment extends Fragment {
 
                             }
                         });
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
             }
         });
+
 
         return rootView;
     }
@@ -206,14 +201,6 @@ public class GlossaryFragment extends Fragment {
             Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
             mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_glossary, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-        MenuItem item = menu.findItem(R.id.action_search);
-        mSearchView.setMenuItem(item);
     }
 
 }
