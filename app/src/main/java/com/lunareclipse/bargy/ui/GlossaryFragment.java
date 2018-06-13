@@ -9,12 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -101,6 +104,56 @@ public class GlossaryFragment extends Fragment {
         // Set the adapter
         mRecyclerView.setAdapter(mAdapter);
 
+        // Load the recyclerview with the glossary data from Firebase
+        loadGlossaryData();
+
+        // Search button click listener
+        mSearchImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchGlossary();
+                returnFocus();
+            }
+        });
+
+        // EditText event action listener
+        mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchGlossary();
+                    returnFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null)
+        {
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
+    }
+
+    private void loadGlossaryData(){
+        // Get a reference to the child node of the language
+        mGlossaryDatabaseReference = mFirebaseDatabase.getReference().child("yola");
+
         // Setup the Firebase database event listener
         mChildEventListener = new ChildEventListener() {
             @Override
@@ -130,77 +183,67 @@ public class GlossaryFragment extends Fragment {
 
             }
         };
+        // Add the event listener
         mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
-
-        mSearchImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Remove data from the recyclerview
-                mAdapter.clear();
-
-                // Get query string
-                String query = mSearchEditText.getText().toString();
-
-                // Phrases are capitalized in the database
-                String capitalizedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
-                // Do search
-                mGlossaryDatabaseReference
-                        .orderByChild("phrase")
-                        .startAt(capitalizedQuery)
-                        .endAt(capitalizedQuery + "\uf8ff")
-                        .addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                Phrase phrase = dataSnapshot.getValue(Phrase.class);
-
-                                // Add phrases to the recyclerview
-                                mAdapter.add(phrase);
-                                mAdapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-            }
-        });
-
-
-        return rootView;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
-    }
+    private void searchGlossary(){
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+        // Remove data from the recyclerview
+        mAdapter.clear();
 
-        if(savedInstanceState != null)
-        {
-            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        // Get query string
+        String query = mSearchEditText.getText().toString();
+
+        if (!query.isEmpty()){
+            // Phrases are capitalized in the database
+            String capitalizedQuery = query.substring(0, 1).toUpperCase() + query.substring(1);
+            // Do search
+            mGlossaryDatabaseReference
+                    .orderByChild("translated_phrase")
+                    .startAt(capitalizedQuery)
+                    .endAt(capitalizedQuery + "\uf8ff")
+                    .addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                            Phrase phrase = dataSnapshot.getValue(Phrase.class);
+
+                            // Add phrases to the recyclerview
+                            mAdapter.add(phrase);
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        } else{
+            loadGlossaryData();
         }
+    }
+
+    private void returnFocus(){
+        // Hide keyboard and return focus
+        mRecyclerView.requestFocus();
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }
