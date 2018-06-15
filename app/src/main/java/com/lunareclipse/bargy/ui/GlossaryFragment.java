@@ -83,7 +83,7 @@ public class GlossaryFragment extends Fragment {
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        mGlossaryDatabaseReference = mFirebaseDatabase.getReference().child("yola");
+        mGlossaryDatabaseReference = mFirebaseDatabase.getReference("yola/glossary");
 
         // Bind Butterknife variables
         ButterKnife.bind(this, rootView);
@@ -152,7 +152,7 @@ public class GlossaryFragment extends Fragment {
 
     private void loadGlossaryData(){
         // Get a reference to the child node of the language
-        mGlossaryDatabaseReference = mFirebaseDatabase.getReference().child("yola");
+        mGlossaryDatabaseReference = mFirebaseDatabase.getReference("yola/glossary");
 
         // Setup the Firebase database event listener
         mChildEventListener = new ChildEventListener() {
