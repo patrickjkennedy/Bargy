@@ -23,11 +23,13 @@
             android:parentActivityName=".ui.HomeActivity" />
         <activity
             android:name=".ui.GlossaryActivity"
-            android:parentActivityName=".ui.MenuActivity"/>
+            android:parentActivityName=".ui.MenuActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".ui.HistoryActivity"></activity>
     </application>
 
 </manifest>
