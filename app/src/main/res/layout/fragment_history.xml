@@ -29,7 +29,7 @@
         android:padding="8dp"/>
 
     <View
-        android:id="@+id/v_hdivider"
+        android:id="@+id/v_hdivider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimary"
@@ -39,7 +39,7 @@
         android:visibility="invisible"/>
 
     <TextView
-        android:layout_below="@+id/v_hdivider"
+        android:layout_below="@+id/v_hdivider1"
         android:id="@+id/tv_detail_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,11 +57,28 @@
         android:textSize="18sp"
         android:padding="8dp"/>
 
+    <View
+        android:id="@+id/v_hdivider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/tv_detail"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:visibility="invisible"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_hdivider2"
+        android:padding="4dp"/>
+
     <TextView
         android:id="@+id/tv_attribution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_detail"
+        android:layout_below="@+id/rv_pictures"
         android:padding="4dp"
         android:text="@string/attribution"
         android:visibility="invisible"/>

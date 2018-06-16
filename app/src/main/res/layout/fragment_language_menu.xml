@@ -34,7 +34,7 @@
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/glossary"
-                tools:contentDescription="Language Image"/>
+                tools:contentDescription="Glossary Image"/>
 
             <TextView
                 android:padding="8dp"
@@ -71,13 +71,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="340dp"
                 android:id="@+id/iv_history"
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/yola"
-                tools:contentDescription="Language Image"/>
+                android:src="@drawable/history"
+                tools:contentDescription="History Image"/>
 
             <TextView
                 android:padding="8dp"

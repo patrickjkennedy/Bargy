@@ -1,42 +1,27 @@
 package com.lunareclipse.bargy.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
-import com.lunareclipse.bargy.data.LanguagesAdapter;
+import com.lunareclipse.bargy.data.PictureAdapter;
 import com.lunareclipse.bargy.model.History;
-import com.lunareclipse.bargy.model.Language;
-import com.lunareclipse.bargy.service.LanguageClient;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HistoryFragment extends Fragment {
 
@@ -55,7 +40,14 @@ public class HistoryFragment extends Fragment {
     @BindView(R.id.tv_summary_heading) TextView mSummaryHeading;
     @BindView(R.id.tv_detail_heading) TextView mDetailHeading;
     @BindView(R.id.tv_attribution) TextView mAttribution;
-    @BindView(R.id.v_hdivider) View mDivider;
+    @BindView(R.id.v_hdivider1) View mDivider1;
+    @BindView(R.id.v_hdivider2) View mDivider2;
+
+    // Recyclerview
+    @BindView(R.id.rv_pictures) RecyclerView mRecyclerView;
+
+    // PictureAdapter
+    private PictureAdapter mAdapter;
 
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
@@ -83,6 +75,18 @@ public class HistoryFragment extends Fragment {
         // Load the detail and description text
         loadHistoryData();
 
+        // Setup the recyclerview for the pictures
+        // Create a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Initialize the RecyclerView adapter, PictureAdapter
+        mAdapter = new PictureAdapter(mContext);
+
+        // Set the adapter
+        mRecyclerView.setAdapter(mAdapter);
+
+
         return rootView;
     }
 
@@ -97,12 +101,23 @@ public class HistoryFragment extends Fragment {
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                 History history = dataSnapshot.getValue(History.class);
-                System.out.println(history.getDetail());
                 mSummary.setText(history.getSummary());
                 mDetail.setText(history.getDetail());
-                //Hide loading icon
+
+                // Hide loading icon
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+
+                // Add pictures to the recyclerview
+                mAdapter.setPictures(history.getPictures());
+
+                // Display static content
+                mSummaryHeading.setVisibility(View.VISIBLE);
+                mDivider1.setVisibility(View.VISIBLE);
+                mDetailHeading.setVisibility(View.VISIBLE);
+                mDivider2.setVisibility(View.VISIBLE);
+                mAttribution.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -127,10 +142,6 @@ public class HistoryFragment extends Fragment {
         };
         // Add the event listener
         mHistoryDatabaseReference.addChildEventListener(mChildEventListener);
-        // Display static content
-        mSummaryHeading.setVisibility(View.VISIBLE);
-        mDivider.setVisibility(View.VISIBLE);
-        mDetailHeading.setVisibility(View.VISIBLE);
-        mAttribution.setVisibility(View.VISIBLE);
+
     }
 }
