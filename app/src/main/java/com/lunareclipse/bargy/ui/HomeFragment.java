@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.LanguagesAdapter;
 import com.lunareclipse.bargy.model.Language;
 import com.lunareclipse.bargy.service.LanguageClient;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -113,8 +110,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<Language>> call, Response<ArrayList<Language>> response) {
                 ArrayList<Language> languages = response.body();
-
-                Log.d("HomeActivity", "Language: " + languages.get(0).toString());
 
                 // Pass the recipes from the response into the adapter
                 mAdapter.setLanguages(languages);

@@ -63,8 +63,18 @@ public class LanguageMenuFragment extends Fragment {
         mHistoryOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create the history fragment
-                Log.d("LanguageMenuFragment", "History - ta da!");
+                Class destinationClass = HistoryActivity.class;
+                Intent newIntent = new Intent(mContext, destinationClass);
+
+                // Get the intent that started the activity containing this fragment
+                Intent priorIntent = getActivity().getIntent();
+                Language language = (Language) priorIntent.getSerializableExtra("language");
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("language", language);
+
+                newIntent.putExtras(bundle);
+                startActivity(newIntent);
 
             }
         });

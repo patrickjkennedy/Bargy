@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_picture_item"
+    android:layout_margin="12dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            android:id="@+id/iv_picture_item"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            tools:src="@drawable/yola"
+            tools:contentDescription="Language Image"/>
+
+        <TextView
+            android:padding="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_description"
+            android:textSize="20sp"
+            tools:text="Traditional thatched cottage near Bannow Bay in Bargy"
+            android:layout_below="@+id/iv_picture_item"/>
+
+        <TextView
+            android:padding="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_credit"
+            android:textSize="16sp"
+            tools:text="Credit: Pam Brophy"
+            android:textStyle="italic"
+            android:layout_below="@+id/tv_description" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
