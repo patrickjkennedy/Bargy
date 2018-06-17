@@ -29,7 +29,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.HistoryActivity"
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:parentActivityName=".ui.MenuActivity" />
+        <activity android:name=".ui.CultureActivity"
             android:parentActivityName=".ui.MenuActivity" />
     </application>
 
