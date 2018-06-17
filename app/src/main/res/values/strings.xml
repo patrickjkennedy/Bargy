@@ -2,6 +2,7 @@
     <string name="app_name">Bargy</string>
     <string name="home_list_error">Unable to Load Languages</string>
     <string name="glossary_error">Unable to Load Glossary</string>
+    <string name="culture_error">Unable to Load Culture</string>
     <string name="searchEngYola">Search English to Yola</string>
     <string name="history_error">Unable to Load History</string>
     <string name="attribution">Content provided by Wikipedia under a CC BY-SA 4.0 license.</string>

@@ -114,13 +114,13 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="340dp"
                 android:id="@+id/iv_culture"
                 android:layout_alignParentTop="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/yola"
-                tools:contentDescription="Language Image"/>
+                android:src="@drawable/culture"
+                tools:contentDescription="Culture Image"/>
 
             <TextView
                 android:padding="8dp"
