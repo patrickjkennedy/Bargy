@@ -2,6 +2,7 @@ package com.lunareclipse.bargy.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -13,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.LanguagesAdapter;
 import com.lunareclipse.bargy.model.Language;
@@ -45,6 +50,12 @@ public class HomeFragment extends Fragment {
 
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "LanguagesFragment.recycler.layout";
+
+    // Adview
+    @BindView(R.id.adView) AdView mAdView;
+
+    // AdMob App ID
+    private static final String adMobId = "ADDMOBID";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -130,6 +141,13 @@ public class HomeFragment extends Fragment {
                 mErrorTextView.setVisibility(View.VISIBLE);
             }
         });
+
+        // Add Admob
+        MobileAds.initialize(mContext, adMobId);
+
+        // Load Ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         return rootView;
     }
