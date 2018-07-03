@@ -1,4 +1,4 @@
-package com.lunareclipse.bargy;
+package com.lunareclipse.bargy.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,7 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.lunareclipse.bargy.ui.HomeActivity;
+import com.lunareclipse.bargy.R;
+import com.lunareclipse.bargy.model.Phrase;
 import com.lunareclipse.bargy.ui.MenuActivity;
 
 /**
@@ -30,6 +31,9 @@ public class PhraseWidgetProvider extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        RandomPhrase randomPhrase = new RandomPhrase();
+        Phrase phrase = randomPhrase.getRandomPhrase("yola");
     }
 
     @Override
@@ -50,4 +54,6 @@ public class PhraseWidgetProvider extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 }
+
+
 
