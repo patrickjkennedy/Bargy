@@ -1,14 +1,16 @@
 package com.lunareclipse.bargy.widget;
 
+import android.appwidget.AppWidgetManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.RemoteViews;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Phrase;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,23 +20,16 @@ public class RandomPhrase {
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mGlossaryDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
     // Hashmap for language glossary counts
-    HashMap<String, Integer> glossaryMaxCounts = new HashMap<>();
-
-    // Random phrase
-    private Phrase mPhrase;
+    private HashMap<String, Integer> glossaryMaxCounts = new HashMap<>();
 
     public RandomPhrase(){
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
     }
 
-    public Phrase getRandomPhrase(String language){
-        // Return phrase
-        mPhrase = new Phrase();
+    public void generateRandomPhrase(String language, final RemoteViews views, final AppWidgetManager appWidgetManager, final int appWidgetId){
 
         // Get a reference to the glossary node of the language
         String languageGlossary = language + "/glossary/";
@@ -60,7 +55,14 @@ public class RandomPhrase {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         Phrase phrase = dataSnapshot.getValue(Phrase.class);
-                        Log.d("WIDGET", phrase.toString());
+
+                        views.setTextViewText(R.id.appwidget_phrase, phrase.getPhrase());
+                        views.setTextViewText(R.id.appwidget_translated_phrase, phrase.getTranslated_Phrase());
+
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.appwidget_phrase);
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.appwidget_translated_phrase);
+
+                        appWidgetManager.updateAppWidget(appWidgetId, views);
                     }
 
                     @Override
@@ -83,7 +85,6 @@ public class RandomPhrase {
 
                     }
                 });
-        return mPhrase;
     }
 
     private void initMaxGlossary(){

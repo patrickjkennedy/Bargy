@@ -33,7 +33,10 @@ public class PhraseWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
         RandomPhrase randomPhrase = new RandomPhrase();
-        Phrase phrase = randomPhrase.getRandomPhrase("yola");
+        randomPhrase.generateRandomPhrase("yola", views, appWidgetManager, appWidgetId);
+
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+
     }
 
     @Override
@@ -53,6 +56,10 @@ public class PhraseWidgetProvider extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+
+
+
 }
 
 
