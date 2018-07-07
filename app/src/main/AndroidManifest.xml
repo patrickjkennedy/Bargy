@@ -32,8 +32,19 @@
         <activity
             android:name=".ui.HistoryActivity"
             android:parentActivityName=".ui.MenuActivity" />
-        <activity android:name=".ui.CultureActivity"
+        <activity
+            android:name=".ui.CultureActivity"
             android:parentActivityName=".ui.MenuActivity" />
+
+        <receiver android:name=".widget.PhraseWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/phrase_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>

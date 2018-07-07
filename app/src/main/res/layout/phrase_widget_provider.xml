@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin"
+    android:id="@+id/widget_wod"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/appwidget_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="24sp"
+        android:text="@string/yola_word_of_the_day"
+        android:textColor="#FFF"/>
+
+    <TextView
+        android:id="@+id/appwidget_phrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appwidget_heading"
+        android:fontFamily="@font/nunito_bold"
+        android:textColor="#FFF"
+        android:textSize="24sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Zummer curthere"/>
+
+    <TextView
+        android:id="@+id/appwidget_translated_phrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appwidget_phrase"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:textSize="20sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textStyle="italic"
+        tools:text="Summer"
+        android:textColor="@color/colorAccent"/>
+
+</RelativeLayout>

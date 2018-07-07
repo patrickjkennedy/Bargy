@@ -6,4 +6,6 @@
     <string name="searchEngYola">Search English to Yola</string>
     <string name="history_error">Unable to Load History</string>
     <string name="attribution">Content provided by Wikipedia under a CC BY-SA 4.0 license.</string>
+    <string name="add_widget">Add widget</string>
+    <string name="yola_word_of_the_day">Yola Word of the Day</string>
 </resources>
