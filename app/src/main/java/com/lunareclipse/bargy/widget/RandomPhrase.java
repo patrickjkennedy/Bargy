@@ -88,7 +88,7 @@ public class RandomPhrase {
     }
 
     private void initMaxGlossary(){
-        glossaryMaxCounts.put("yola", 556);
+        glossaryMaxCounts.put("yola", 1284);
     }
 
 }
