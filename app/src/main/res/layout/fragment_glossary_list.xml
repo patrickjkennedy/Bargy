@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:textColor="#000"
         android:textSize="18sp"
         tools:text="Aagar" />
@@ -23,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/language_phrase"
         android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:paddingTop="8dp"
         android:fontFamily="sans-serif-medium"
         android:textSize="16sp"

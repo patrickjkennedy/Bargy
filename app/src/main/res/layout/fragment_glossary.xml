@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
@@ -20,12 +21,13 @@
         android:textSize="24sp" />
 
     <EditText
-        android:hint="Search"
+        android:hint="@string/search"
         android:imeOptions="actionSearch"
         android:id="@+id/et_search"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_search_heading"
+        android:layout_alignStart="@+id/tv_search_heading"
         android:layout_below="@+id/tv_search_heading"
         android:background="@drawable/search_layout"
         android:fontFamily="@font/nunito_semibold"
@@ -40,13 +42,16 @@
         android:maxLines="1"/>
 
     <ImageButton
+        android:contentDescription="@string/search_button"
         android:id="@+id/ib_search"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_toRightOf="@id/et_search"
+        android:layout_toEndOf="@id/et_search"
         android:layout_below="@+id/tv_search_heading"
         android:background="@drawable/button_background"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/ic_search_white_24dp"
         />
