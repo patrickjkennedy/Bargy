@@ -14,7 +14,7 @@
         android:id="@+id/tv_summary_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Summary"
+        android:text="@string/summary"
         android:textSize="30sp"
         android:padding="8dp"
         android:visibility="invisible"/>
@@ -43,7 +43,7 @@
         android:id="@+id/tv_detail_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detail"
+        android:text="@string/detail"
         android:textSize="30sp"
         android:padding="8dp"
         android:visibility="invisible"/>

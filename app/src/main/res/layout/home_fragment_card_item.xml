@@ -18,6 +18,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:contentDescription="@string/yola_section_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/iv_home_fragment_item"
@@ -28,6 +29,8 @@
 
         <TextView
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_home_fragment_language_name"
@@ -38,6 +41,8 @@
 
         <TextView
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_home_fragment_language_origin"
@@ -48,6 +53,8 @@
 
         <TextView
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_home_fragment_language_type"
@@ -58,6 +65,8 @@
 
         <TextView
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:paddingBottom="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

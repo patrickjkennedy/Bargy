@@ -28,6 +28,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:contentDescription="@string/glossary_section_image"
                 android:layout_width="wrap_content"
                 android:layout_height="340dp"
                 android:id="@+id/iv_glossary"
@@ -43,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_glossary"
                 android:textSize="30sp"
-                android:text="Glossary"
+                android:text="@string/glossary"
                 android:textStyle="bold"
                 android:layout_below="@+id/iv_glossary"/>
 
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:contentDescription="@string/history_section_image"
                 android:layout_width="wrap_content"
                 android:layout_height="340dp"
                 android:id="@+id/iv_history"
@@ -86,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_history"
                 android:textSize="30sp"
-                android:text="History"
+                android:text="@string/history"
                 android:textStyle="bold"
                 android:layout_below="@+id/iv_history"/>
 
@@ -114,6 +116,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:contentDescription="@string/culture_section_image"
                 android:layout_width="wrap_content"
                 android:layout_height="340dp"
                 android:id="@+id/iv_culture"
@@ -129,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_culture"
                 android:textSize="30sp"
-                android:text="Culture"
+                android:text="@string/culture"
                 android:textStyle="bold"
                 android:layout_below="@+id/iv_culture"/>
 
