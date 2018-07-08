@@ -98,13 +98,13 @@ public class GlossaryFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         // Load the recyclerview with the glossary data from Firebase
-        loadGlossaryData();
+        loadGlossaryData(savedInstanceState);
 
         // Search button click listener
         mSearchImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchGlossary();
+                searchGlossary(savedInstanceState);
                 returnFocus();
             }
         });
@@ -114,7 +114,7 @@ public class GlossaryFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    searchGlossary();
+                    searchGlossary(savedInstanceState);
                     returnFocus();
                     return true;
                 }
@@ -122,6 +122,7 @@ public class GlossaryFragment extends Fragment {
             }
         });
 
+        onViewStateRestored(savedInstanceState);
 
         return rootView;
     }
@@ -143,7 +144,7 @@ public class GlossaryFragment extends Fragment {
         }
     }
 
-    private void loadGlossaryData(){
+    private void loadGlossaryData(final Bundle bundle){
         // Get a reference to the child node of the language
         mGlossaryDatabaseReference = mFirebaseDatabase.getReference("yola/glossary");
 
@@ -154,7 +155,7 @@ public class GlossaryFragment extends Fragment {
                 Phrase phrase = dataSnapshot.getValue(Phrase.class);
                 mAdapter.add(phrase);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-
+                onViewStateRestored(bundle);
             }
 
             @Override
@@ -181,7 +182,7 @@ public class GlossaryFragment extends Fragment {
         mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
-    private void searchGlossary(){
+    private void searchGlossary(Bundle bundle){
 
         // Remove data from the recyclerview
         mAdapter.clear();
@@ -229,7 +230,7 @@ public class GlossaryFragment extends Fragment {
                         }
                     });
         } else{
-            loadGlossaryData();
+            loadGlossaryData(bundle);
         }
     }
 
