@@ -154,6 +154,7 @@ public class GlossaryFragment extends Fragment {
                 Phrase phrase = dataSnapshot.getValue(Phrase.class);
                 mAdapter.add(phrase);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
