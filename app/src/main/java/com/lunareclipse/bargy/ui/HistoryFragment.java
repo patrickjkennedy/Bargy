@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,13 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.PictureAdapter;
 import com.lunareclipse.bargy.model.History;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HistoryFragment extends Fragment {
-
-    // Context
-    private Context mContext;
 
     // TextView for Error Messaging
     @BindView(R.id.tv_history_error_message_display) TextView mErrorTextView;
@@ -35,6 +34,7 @@ public class HistoryFragment extends Fragment {
     @BindView(R.id.pb_history_loading_indicator) ProgressBar mLoadingIndicator;
 
     // Views for content from FRD
+    @BindView(R.id.sv_history) ScrollView mScrollView;
     @BindView(R.id.tv_summary) TextView mSummary;
     @BindView(R.id.tv_detail) TextView mDetail;
     @BindView(R.id.tv_summary_heading) TextView mSummaryHeading;
@@ -49,10 +49,8 @@ public class HistoryFragment extends Fragment {
     // PictureAdapter
     private PictureAdapter mAdapter;
 
-    // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mHistoryDatabaseReference;
-    private ChildEventListener mChildEventListener;
+    // Key for Scrollview position
+    private static final String ARTICLE_SCROLL_POSITION = "ARTICLE_SCROLL_POSITION";
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -62,7 +60,7 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         // Context
-        mContext = getActivity();
+        Context mContext = getActivity();
 
         final View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
@@ -86,19 +84,18 @@ public class HistoryFragment extends Fragment {
         // Set the adapter
         mRecyclerView.setAdapter(mAdapter);
 
-
         return rootView;
     }
 
     private void loadHistoryData(){
         // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         // Get a reference to the history node
-        mHistoryDatabaseReference = mFirebaseDatabase.getReference("yola/history");
+        DatabaseReference mHistoryDatabaseReference = mFirebaseDatabase.getReference("yola/history");
 
         // Setup the Firebase database event listener
-        mChildEventListener = new ChildEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -143,5 +140,27 @@ public class HistoryFragment extends Fragment {
         // Add the event listener
         mHistoryDatabaseReference.addChildEventListener(mChildEventListener);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARTICLE_SCROLL_POSITION, mScrollView.getScrollY());
+    }
+
+   @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if(savedInstanceState != null)
+        {
+            final int positionY = savedInstanceState.getInt(ARTICLE_SCROLL_POSITION);
+            if(positionY != 0)
+                mScrollView.post(new Runnable() {
+                    public void run() {
+                        mScrollView.scrollTo(0, positionY);
+                    }
+                });
+        }
     }
 }

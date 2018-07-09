@@ -3,11 +3,16 @@ package com.lunareclipse.bargy.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
+
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Language;
 import butterknife.BindView;
@@ -22,6 +27,10 @@ public class LanguageMenuFragment extends Fragment {
     @BindView(R.id.cv_glossary) CardView mGlossaryOption;
     @BindView(R.id.cv_history) CardView mHistoryOption;
     @BindView(R.id.cv_culture) CardView mCultureOption;
+    @BindView(R.id.sv_menu) ScrollView mScrollView;
+
+    // Key for Scrollview position
+    private static final String ARTICLE_SCROLL_POSITION = "ARTICLE_SCROLL_POSITION";
 
     public LanguageMenuFragment() {
         // Required empty public constructor
@@ -95,6 +104,30 @@ public class LanguageMenuFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARTICLE_SCROLL_POSITION, mScrollView.getScrollY());
+        Log.d("LanguageMenuFragment", "Saved Position: " + mScrollView.getScrollY());
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if(savedInstanceState != null)
+        {
+            final int positionY = savedInstanceState.getInt(ARTICLE_SCROLL_POSITION);
+            if(positionY != 0)
+                mScrollView.post(new Runnable() {
+                    public void run() {
+                        mScrollView.scrollTo(0, positionY);
+                        Log.d("LanguageMenuFragment", "Loaded Position: " + positionY);
+                    }
+                });
+        }
     }
 
 }

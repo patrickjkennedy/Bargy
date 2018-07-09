@@ -31,9 +31,6 @@ import butterknife.ButterKnife;
 
 public class GlossaryFragment extends Fragment {
 
-    // Context
-    private Context mContext;
-
     // RecyclerView
     @BindView(R.id.rv_glossary) RecyclerView mRecyclerView;
 
@@ -58,7 +55,6 @@ public class GlossaryFragment extends Fragment {
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mGlossaryDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
     public GlossaryFragment() {
         // Required empty public constructor
@@ -69,7 +65,7 @@ public class GlossaryFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         // Context
-        mContext = getActivity();
+        Context mContext = getActivity();
 
         final View rootView = inflater.inflate(R.layout.fragment_glossary, container, false);
 
@@ -98,13 +94,13 @@ public class GlossaryFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         // Load the recyclerview with the glossary data from Firebase
-        loadGlossaryData();
+        loadGlossaryData(savedInstanceState);
 
         // Search button click listener
         mSearchImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchGlossary();
+                searchGlossary(savedInstanceState);
                 returnFocus();
             }
         });
@@ -114,14 +110,13 @@ public class GlossaryFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    searchGlossary();
+                    searchGlossary(savedInstanceState);
                     returnFocus();
                     return true;
                 }
                 return false;
             }
         });
-
 
         return rootView;
     }
@@ -143,18 +138,18 @@ public class GlossaryFragment extends Fragment {
         }
     }
 
-    private void loadGlossaryData(){
+    private void loadGlossaryData(final Bundle bundle){
         // Get a reference to the child node of the language
         mGlossaryDatabaseReference = mFirebaseDatabase.getReference("yola/glossary");
 
         // Setup the Firebase database event listener
-        mChildEventListener = new ChildEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Phrase phrase = dataSnapshot.getValue(Phrase.class);
                 mAdapter.add(phrase);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-
+                onViewStateRestored(bundle);
             }
 
             @Override
@@ -181,7 +176,7 @@ public class GlossaryFragment extends Fragment {
         mGlossaryDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
-    private void searchGlossary(){
+    private void searchGlossary(Bundle bundle){
 
         // Remove data from the recyclerview
         mAdapter.clear();
@@ -229,7 +224,7 @@ public class GlossaryFragment extends Fragment {
                         }
                     });
         } else{
-            loadGlossaryData();
+            loadGlossaryData(bundle);
         }
     }
 
