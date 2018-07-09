@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.lunareclipse.bargy.R;
-import com.lunareclipse.bargy.model.Phrase;
 import com.lunareclipse.bargy.ui.MenuActivity;
 
 /**

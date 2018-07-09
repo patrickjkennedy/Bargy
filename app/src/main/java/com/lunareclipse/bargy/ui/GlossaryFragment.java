@@ -31,9 +31,6 @@ import butterknife.ButterKnife;
 
 public class GlossaryFragment extends Fragment {
 
-    // Context
-    private Context mContext;
-
     // RecyclerView
     @BindView(R.id.rv_glossary) RecyclerView mRecyclerView;
 
@@ -58,7 +55,6 @@ public class GlossaryFragment extends Fragment {
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mGlossaryDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
     public GlossaryFragment() {
         // Required empty public constructor
@@ -69,7 +65,7 @@ public class GlossaryFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
 
         // Context
-        mContext = getActivity();
+        Context mContext = getActivity();
 
         final View rootView = inflater.inflate(R.layout.fragment_glossary, container, false);
 
@@ -122,8 +118,6 @@ public class GlossaryFragment extends Fragment {
             }
         });
 
-        onViewStateRestored(savedInstanceState);
-
         return rootView;
     }
 
@@ -149,7 +143,7 @@ public class GlossaryFragment extends Fragment {
         mGlossaryDatabaseReference = mFirebaseDatabase.getReference("yola/glossary");
 
         // Setup the Firebase database event listener
-        mChildEventListener = new ChildEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Phrase phrase = dataSnapshot.getValue(Phrase.class);

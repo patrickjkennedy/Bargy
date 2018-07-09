@@ -4,9 +4,7 @@
     <string name="glossary_error">Unable to Load Glossary</string>
     <string name="culture_error">Unable to Load Culture</string>
     <string name="searchEngYola">Search English to Yola</string>
-    <string name="history_error">Unable to Load History</string>
     <string name="attribution">Content provided by Wikipedia under a CC BY-SA 4.0 license.</string>
-    <string name="add_widget">Add widget</string>
     <string name="yola_word_of_the_day">Yola Word of the Day</string>
     <string name="search">Search</string>
     <string name="search_button">Search button</string>
@@ -19,4 +17,5 @@
     <string name="culture_section_image">Culture Section Image</string>
     <string name="culture">Culture</string>
     <string name="yola_section_image">Yola Section Image</string>
+    <string name="play_icon">Play icon</string>
 </resources>

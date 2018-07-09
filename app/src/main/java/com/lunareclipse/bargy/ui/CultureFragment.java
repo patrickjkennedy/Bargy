@@ -23,12 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.CultureAdapter;
-import com.lunareclipse.bargy.data.LanguagesAdapter;
-import com.lunareclipse.bargy.data.PictureAdapter;
 import com.lunareclipse.bargy.model.Culture;
-import com.lunareclipse.bargy.model.History;
-import com.lunareclipse.bargy.model.Language;
-import com.lunareclipse.bargy.model.Phrase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,11 +47,6 @@ public class CultureFragment extends Fragment {
 
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "CultureFragment.recycler.layout";
-
-    // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mCultureDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
 
     public CultureFragment() {
@@ -130,13 +120,13 @@ public class CultureFragment extends Fragment {
     private void loadCulturalData(){
 
         // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         // Get a reference to the child node of the language
-        mCultureDatabaseReference = mFirebaseDatabase.getReference("yola/culture");
+        DatabaseReference mCultureDatabaseReference = mFirebaseDatabase.getReference("yola/culture");
 
         // Setup the Firebase database event listener
-        mChildEventListener = new ChildEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Culture culture = dataSnapshot.getValue(Culture.class);

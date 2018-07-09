@@ -2,7 +2,6 @@ package com.lunareclipse.bargy.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -54,8 +53,8 @@ public class HomeFragment extends Fragment {
     // Adview
     @BindView(R.id.adView) AdView mAdView;
 
-    // AdMob App ID
-    private static final String adMobId = "ADDMOBID";
+    // AdMob App ID (using Sample ID)
+    private static final String adMobId = "ca-app-pub-3940256099942544~3347511713";
 
     public HomeFragment() {
         // Required empty public constructor

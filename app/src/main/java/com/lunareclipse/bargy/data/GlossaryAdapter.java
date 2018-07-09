@@ -3,15 +3,12 @@ package com.lunareclipse.bargy.data;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
+
 import com.lunareclipse.bargy.R;
-import com.lunareclipse.bargy.model.Language;
 import com.lunareclipse.bargy.model.Phrase;
 
 import java.util.ArrayList;
@@ -20,13 +17,11 @@ import butterknife.ButterKnife;
 
 public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.ViewHolder> {
 
-    private Context mContext;
-
     // ArrayList of Phrases
     private ArrayList<Phrase> mGlossary = new ArrayList<>();
 
     public GlossaryAdapter(Context context) {
-        this.mContext = context;
+        Context mContext = context;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
