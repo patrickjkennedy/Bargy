@@ -7,12 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Language;
 import butterknife.BindView;
@@ -110,7 +108,6 @@ public class LanguageMenuFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(ARTICLE_SCROLL_POSITION, mScrollView.getScrollY());
-        Log.d("LanguageMenuFragment", "Saved Position: " + mScrollView.getScrollY());
     }
 
     @Override
@@ -124,7 +121,6 @@ public class LanguageMenuFragment extends Fragment {
                 mScrollView.post(new Runnable() {
                     public void run() {
                         mScrollView.scrollTo(0, positionY);
-                        Log.d("LanguageMenuFragment", "Loaded Position: " + positionY);
                     }
                 });
         }
