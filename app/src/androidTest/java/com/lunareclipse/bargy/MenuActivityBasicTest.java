@@ -35,7 +35,7 @@ public class MenuActivityBasicTest {
         onView(withId(R.id.cv_history)).perform(scrollTo()).perform(click());
 
         // Check that the new screen loads
-        onView(withId(R.id.tv_summary_heading)).check(matches(withText("Summary")));
+        onView(withId(R.id.rv_history)).check(matches(isDisplayed()));
     }
 
     @Test

@@ -94,30 +94,13 @@ public class CultureFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         // Load data
-        loadCulturalData();
+        loadCulturalData(savedInstanceState);
 
         return rootView;
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        if(savedInstanceState != null)
-        {
-            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
-        }
-    }
-
-    private void loadCulturalData(){
+    private void loadCulturalData(final Bundle bundle){
 
         // Initialize Firebase components
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -132,6 +115,7 @@ public class CultureFragment extends Fragment {
                 Culture culture = dataSnapshot.getValue(Culture.class);
                 mAdapter.add(culture);
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+                onViewStateRestored(bundle);
             }
 
             @Override
@@ -156,6 +140,23 @@ public class CultureFragment extends Fragment {
         };
         // Add the event listener
         mCultureDatabaseReference.addChildEventListener(mChildEventListener);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if(savedInstanceState != null)
+        {
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 
 }
