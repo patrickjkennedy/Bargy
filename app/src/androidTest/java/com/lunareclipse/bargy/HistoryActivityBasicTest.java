@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -19,9 +20,8 @@ public class HistoryActivityBasicTest {
 
     @Test
     public void checkLayout(){
-        // Check to see that the expected headings have loaded
-        onView(withId(R.id.tv_summary_heading)).check(matches(withText("Summary")));
-        onView(withId(R.id.tv_detail_heading)).check(matches(withText("Detail")));
+        // Check that the new screen loads
+        onView(withId(R.id.rv_history)).check(matches(isDisplayed()));
     }
 
 }
