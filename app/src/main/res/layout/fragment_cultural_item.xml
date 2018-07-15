@@ -15,7 +15,9 @@
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-medium"
         android:textSize="16sp"
-        tools:text="Video" />
+        tools:text="Video"
+        android:layout_marginStart="16dp"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/tv_description_culture"
@@ -29,7 +31,7 @@
         tools:text="Yola Language Song"
         android:layout_below="@+id/tv_type_culture"
         android:textColor="#000"
-        />
+        android:layout_marginStart="16dp" />
 
     <ImageButton
         android:contentDescription="@string/play_icon"
