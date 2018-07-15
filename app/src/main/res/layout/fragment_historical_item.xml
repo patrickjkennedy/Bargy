@@ -84,7 +84,8 @@
                             android:layout_alignParentTop="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/yola"
-                            tools:contentDescription="Language Image"/>
+                            tools:contentDescription="Language Image"
+                            android:contentDescription="@string/yola_image_one" />
 
                         <TextView
                             android:padding="12dp"
@@ -129,7 +130,8 @@
                             android:layout_alignParentTop="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/yola"
-                            tools:contentDescription="Language Image"/>
+                            tools:contentDescription="Language Image"
+                            android:contentDescription="@string/yola_image_two" />
 
                         <TextView
                             android:padding="12dp"
@@ -160,6 +162,7 @@
             android:layout_below="@+id/cv_image_two"
             android:padding="8dp"
             android:layout_marginLeft="8dp"
-            android:text="@string/attribution"/>
+            android:text="@string/attribution"
+            android:layout_marginStart="8dp" />
 
 </RelativeLayout>

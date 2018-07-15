@@ -19,4 +19,6 @@
     <string name="yola_section_image">Yola Section Image</string>
     <string name="play_icon">Play icon</string>
     <string name="history_error">Unable to Load History</string>
+    <string name="yola_image_one">Yola Image One</string>
+    <string name="yola_image_two">Yola Image Two</string>
 </resources>
