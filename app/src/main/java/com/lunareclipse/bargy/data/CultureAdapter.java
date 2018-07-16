@@ -31,7 +31,6 @@ public class CultureAdapter extends RecyclerView.Adapter<CultureAdapter.ViewHold
 
     public CultureAdapter(CultureAdapterClickListener listener, Context context) {
         this.mListener = listener;
-        Context mContext = context;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
