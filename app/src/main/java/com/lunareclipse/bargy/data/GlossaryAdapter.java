@@ -21,7 +21,6 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.ViewHo
     private ArrayList<Phrase> mGlossary = new ArrayList<>();
 
     public GlossaryAdapter(Context context) {
-        Context mContext = context;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
