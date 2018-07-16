@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.History;
+import com.lunareclipse.bargy.service.DownloadImageTask;
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,15 +56,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.itemSummary.setText(mHistoricalObjects.get(position).getSummary());
         holder.itemDetail.setText(mHistoricalObjects.get(position).getDetail());
 
-        Glide.with(mContext)
-                .load(mHistoricalObjects.get(position).getPicture_One_Link())
-                .into(holder.itemImageViewOne);
+        // Use an AsyncTask to download and set the first image.
+        new DownloadImageTask(holder.itemImageViewOne).execute(mHistoricalObjects.get(position).getPicture_One_Link());
+
         holder.itemImageOneDescription.setText(mHistoricalObjects.get(position).getPicture_One_Description());
         holder.itemImageOneAttribution.setText(mHistoricalObjects.get(position).getPicture_One_Attribution());
 
-        Glide.with(mContext)
-                .load(mHistoricalObjects.get(position).getPicture_Two_Link())
-                .into(holder.itemImageViewTwo);
+        // Use an AsyncTask to download and set the second image.
+        new DownloadImageTask(holder.itemImageViewTwo).execute(mHistoricalObjects.get(position).getPicture_Two_Link());
+
         holder.itemImageTwoDescription.setText(mHistoricalObjects.get(position).getPicture_Two_Description());
         holder.itemImageTwoAttribution.setText(mHistoricalObjects.get(position).getPicture_Two_Attribution());
     }

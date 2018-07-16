@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Culture;
-
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
