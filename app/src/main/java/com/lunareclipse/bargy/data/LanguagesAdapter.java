@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.model.Language;
-import com.lunareclipse.bargy.service.DownloadImageTask;
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,10 +67,12 @@ public class LanguagesAdapter extends RecyclerView.Adapter<LanguagesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        // Use an AsyncTask to download and set the image.
-        new DownloadImageTask(holder.itemImage).execute(mLanguages.get(position).getImage());
+        // Use Glide to download and set the image.
+        Glide.with(mContext)
+                .load(mLanguages.get(position).getImage())
+                .into(holder.itemImage);
 
-        // Seth the text in the viewholder
+        // Set the text in the viewholder
         holder.itemName.setText(mLanguages.get(position).getName());
         holder.itemOrigin.setText(mLanguages.get(position).getFullOrigin());
         holder.itemType.setText(mLanguages.get(position).getFullType());
