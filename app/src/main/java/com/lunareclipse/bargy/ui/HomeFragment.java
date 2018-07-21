@@ -50,12 +50,6 @@ public class HomeFragment extends Fragment {
     // Key for Recycler Layout
     private static final String BUNDLE_RECYCLER_LAYOUT = "LanguagesFragment.recycler.layout";
 
-    // Adview
-    @BindView(R.id.adView) AdView mAdView;
-
-    // AdMob App ID (using Sample ID)
-    private static final String adMobId = "ca-app-pub-3940256099942544~3347511713";
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -140,13 +134,6 @@ public class HomeFragment extends Fragment {
                 mErrorTextView.setVisibility(View.VISIBLE);
             }
         });
-
-        // Add Admob
-        MobileAds.initialize(mContext, adMobId);
-
-        // Load Ad
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         return rootView;
     }
