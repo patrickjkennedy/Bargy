@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.CultureAdapter;
 import com.lunareclipse.bargy.model.Culture;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

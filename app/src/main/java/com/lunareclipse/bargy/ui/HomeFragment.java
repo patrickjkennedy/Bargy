@@ -13,10 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.lunareclipse.bargy.R;
 import com.lunareclipse.bargy.data.LanguagesAdapter;
 import com.lunareclipse.bargy.model.Language;
